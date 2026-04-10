@@ -2,7 +2,15 @@ const express = require("express");
 const users = require("./data/users");
 const app = express();
 
+
+// Import middleware
+const logger = require("./middleware/logger");
+
+
+// Built-in middleware to parse JSON
 app.use(express.json());
+// Custom middleware: Logger
+app.use(logger);
 
 app.get("/", (req, res) => {
     res.send("User API is running");
