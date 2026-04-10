@@ -5,6 +5,7 @@ const app = express();
 
 // Import middleware
 const logger = require("./middleware/logger");
+const validateUser = require("./middleware/validateUser");
 
 
 // Built-in middleware to parse JSON
@@ -39,7 +40,7 @@ app.get("/users/:id", (req, res) => {
 });
 
 /////post routes CREATE USER
-app.post("/user", (req, res) => {
+app.post("/user",validateUser, (req, res) => {
     const newUser = req.body;
 
     users.push(newUser);
@@ -51,7 +52,7 @@ app.post("/user", (req, res) => {
 });
 
 ///UPDATE USERS
-app.put("/user/:id", (req, res) => {
+app.put("/user/:id", validateUser,(req, res) => {
     const index = users.findIndex(u => u.id === req.params.id);
 
     if (index === -1) {
