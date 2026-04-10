@@ -17,10 +17,7 @@ app.get("/", (req, res) => {
     res.send("User API is running");
 });
 
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+
 
 
 // GET all users
@@ -83,3 +80,20 @@ app.delete("/user/:id", (req, res) => {
     });
 });
 
+ // Global error handler
+ 
+app.use((err, req, res, next) => {
+    console.error(err.message);
+
+    res.status(500).json({
+        message: "Internal Server Error"
+    });
+});
+
+
+
+// Start server
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
