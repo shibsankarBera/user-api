@@ -29,3 +29,48 @@ app.get("/users/:id", (req, res) => {
 
     res.status(200).json(user);
 });
+
+/////post routes CREATE USER
+app.post("/user", (req, res) => {
+    const newUser = req.body;
+
+    users.push(newUser);
+
+    res.status(201).json({
+        message: "User created",
+        user: newUser
+    });
+});
+
+///UPDATE USERS
+app.put("/user/:id", (req, res) => {
+    const index = users.findIndex(u => u.id === req.params.id);
+
+    if (index === -1) {
+        return res.status(404).json({ message: "User not found" });
+    }
+
+    users[index] = { ...users[index], ...req.body };
+
+    res.status(200).json({
+        message: "User updated",
+        user: users[index]
+    });
+});
+
+////DELETE USERS
+app.delete("/user/:id", (req, res) => {
+    const index = users.findIndex(u => u.id === req.params.id);
+
+    if (index === -1) {
+        return res.status(404).json({ message: "User not found" });
+    }
+
+    const deleted = users.splice(index, 1);
+
+    res.status(200).json({
+        message: "User deleted",
+        user: deleted[0]
+    });
+});
+
